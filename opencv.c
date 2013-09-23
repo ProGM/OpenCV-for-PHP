@@ -110,7 +110,7 @@ PHP_MINIT_FUNCTION(opencv)
 	PHP_MINIT(opencv_histogram)(INIT_FUNC_ARGS_PASSTHRU);
 	PHP_MINIT(opencv_capture)(INIT_FUNC_ARGS_PASSTHRU);
 	//cvSetErrMode(CV_ErrModeSilent);
-	cvRedirectError(NULL);
+	cvRedirectError(NULL, NULL, NULL);
 	return SUCCESS;
 }
 /* }}} */
@@ -130,7 +130,7 @@ PHP_MSHUTDOWN_FUNCTION(opencv)
 PHP_RINIT_FUNCTION(opencv)
 {
 	//cvSetErrMode(CV_ErrModeSilent);
-	cvRedirectError(NULL);
+	cvRedirectError(NULL, NULL, NULL);
 	return SUCCESS;
 }
 
