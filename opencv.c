@@ -111,7 +111,7 @@ PHP_MINIT_FUNCTION(opencv)
 	PHP_MINIT(opencv_capture)(INIT_FUNC_ARGS_PASSTHRU);
 	//cvSetErrMode(CV_ErrModeSilent);
 	IplImage* img = 0; 
-	img=cvLoadImage("/app/www/images/v.gif");
+	img=cvLoadImage("/app/www/images/v.gif", CV_LOAD_IMAGE_COLOR);
 	return SUCCESS;
 }
 /* }}} */
@@ -124,7 +124,7 @@ PHP_MSHUTDOWN_FUNCTION(opencv)
 	UNREGISTER_INI_ENTRIES();
 	*/
 	IplImage* img = 0; 
-	img=cvLoadImage("/app/www/images/v.gif");
+	img=cvLoadImage("/app/www/images/v.gif", CV_LOAD_IMAGE_COLOR);
 	return SUCCESS;
 }
 /* }}} */
