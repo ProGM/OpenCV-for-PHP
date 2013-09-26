@@ -109,9 +109,7 @@ PHP_MINIT_FUNCTION(opencv)
 	PHP_MINIT(opencv_image)(INIT_FUNC_ARGS_PASSTHRU);
 	PHP_MINIT(opencv_histogram)(INIT_FUNC_ARGS_PASSTHRU);
 	PHP_MINIT(opencv_capture)(INIT_FUNC_ARGS_PASSTHRU);
-	//cvSetErrMode(CV_ErrModeSilent);
-	IplImage* img = 0; 
-	img=cvLoadImage("/app/www/images/v.gif", CV_LOAD_IMAGE_COLOR);
+	cvSetErrMode(CV_ErrModeSilent);
 	return SUCCESS;
 }
 /* }}} */
@@ -123,8 +121,6 @@ PHP_MSHUTDOWN_FUNCTION(opencv)
 	/* uncomment this line if you have INI entries
 	UNREGISTER_INI_ENTRIES();
 	*/
-	IplImage* img = 0; 
-	img=cvLoadImage("/app/www/images/v.gif", CV_LOAD_IMAGE_COLOR);
 	return SUCCESS;
 }
 /* }}} */
@@ -132,7 +128,7 @@ PHP_MSHUTDOWN_FUNCTION(opencv)
 /* {{{ PHP_RINIT_FUNCTION */
 PHP_RINIT_FUNCTION(opencv)
 {
-	//cvSetErrMode(CV_ErrModeSilent);
+	cvSetErrMode(CV_ErrModeSilent);
 	return SUCCESS;
 }
 
