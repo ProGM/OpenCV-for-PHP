@@ -21,8 +21,10 @@ if test "$PHP_OPENCV" != "no"; then
   export CPPFLAGS="$OLD_CPPFLAGS"
 
   PHP_REQUIRE_CXX()
+  PHP_SUBST(OPENCV_SHARED_LIBADD)
   AC_DEFINE(HAVE_OPENCV, 1, [ ])
 
+  PHP_NEW_EXTENSION(opencv, opencv.c opencv_error.c opencv_mat.c opencv_arr.c opencv_image.c opencv_histogram.c opencv_capture.c, $ext_shared)
 
   EXT_OPENCV_HEADERS="php_opencv_api.h"
 
@@ -59,11 +61,10 @@ if test "$PHP_OPENCV" != "no"; then
                 OPENCV_LIBS="$LDFLAGS `$PKG_CONFIG --libs opencv`"
                 OPENCV_INCS="$CFLAGS `$PKG_CONFIG --cflags-only-I opencv`"
                 PHP_EVAL_INCLINE($OPENCV_INCS)
+                AC_MSG_RESULT([found $OPENCV_LIBS])
                 PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
-                PHP_NEW_EXTENSION(opencv, opencv.c opencv_error.c opencv_mat.c opencv_arr.c opencv_image.c opencv_histogram.c opencv_capture.c, $ext_shared)
-                PHP_SUBST(OPENCV_SHARED_LIBADD)
                 AC_DEFINE(HAVE_OPENCV, 1, [whether opencv exists in the system])
-        else
+            else
                 AC_MSG_RESULT(too old)
                 AC_MSG_ERROR(Ooops ! You need at least opencv 2.1.0)
             fi
