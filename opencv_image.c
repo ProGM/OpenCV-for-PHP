@@ -505,6 +505,7 @@ PHP_METHOD(OpenCV_Image, resize) {
 }
 /* }}} */
 
+
 /* {{{ */
 PHP_METHOD(OpenCV_Image, pyrDown) {
     opencv_image_object *image_object, *dst_object;
@@ -788,6 +789,32 @@ PHP_METHOD(OpenCV_Image, haarDetectObjects)
 }
 /* }}} */
 
+
+PHP_METHOD(OpenCV_Image, copy)
+{
+    opencv_image_object *image_object, *image_src_object, *mask_object;
+    zval *image_zval, *image_src_zval, *mask_zval = NULL;
+
+    PHP_OPENCV_ERROR_HANDLING();
+    if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "OO|O", &image_zval, opencv_ce_image, &image_src_zval, opencv_ce_image, &mask_zval, opencv_ce_image) == FAILURE) {
+        PHP_OPENCV_RESTORE_ERRORS();
+        return;
+    }
+    PHP_OPENCV_RESTORE_ERRORS();
+
+    image_object = opencv_image_object_get(image_zval TSRMLS_CC);
+    image_src_object = opencv_image_object_get(image_src_zval TSRMLS_CC);
+
+    if (mask_zval != NULL)
+    {
+        mask_object = opencv_image_object_get(mask_zval TSRMLS_CC);
+        cvCopy(image_src_object->cvptr(), image_object->cvptr(), mask_object->cvptr());
+    }
+    else
+        cvCopy(image_src_object->cvptr(), image_object->cvptr());
+    php_opencv_throw_exception(TSRMLS_C);
+}
+
 /* {{{ opencv_image_methods[] */
 const zend_function_entry opencv_image_methods[] = {
     PHP_ME(OpenCV_Image, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
@@ -816,6 +843,7 @@ const zend_function_entry opencv_image_methods[] = {
     PHP_ME(OpenCV_Image, matchTemplate, NULL, ZEND_ACC_PUBLIC)
     PHP_ME(OpenCV_Image, haarDetectObjects, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(OpenCV_Image, rectangle, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(OpenCV_Image, copy, NULL, ZEND_ACC_PUBLIC)
     {NULL, NULL, NULL}
 };
 /* }}} */
