@@ -808,10 +808,10 @@ PHP_METHOD(OpenCV_Image, copy)
     if (mask_zval != NULL)
     {
         mask_object = opencv_image_object_get(mask_zval TSRMLS_CC);
-        cvCopy(image_src_object->cvptr(), image_object->cvptr(), mask_object->cvptr());
+        cvCopy(image_src_object->cvptr, image_object->cvptr, mask_object->cvptr;
     }
     else
-        cvCopy(image_src_object->cvptr(), image_object->cvptr());
+        cvCopy(image_src_object->cvptr, image_object->cvptr, NULL);
     php_opencv_throw_exception(TSRMLS_C);
 }
 
