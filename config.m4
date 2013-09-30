@@ -59,11 +59,9 @@ if test "$PHP_OPENCV" != "no"; then
                 opencv_version_full=`$PKG_CONFIG --modversion opencv`
                 AC_MSG_RESULT([found $opencv_version_full])
                 OPENCV_LIBS="$LDFLAGS `$PKG_CONFIG --libs opencv`"
-                TEST123="lol"
                 OPENCV_INCS="$CFLAGS `$PKG_CONFIG --cflags-only-I opencv`"
                 PHP_EVAL_INCLINE($OPENCV_INCS)
-                AC_MSG_RESULT([found $OPENCV_LIBS])
-                PHP_EVAL_LIBLINE($TEST123, OPENCV_SHARED_LIBADD)
+                PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
                 AC_DEFINE(HAVE_OPENCV, 1, [whether opencv exists in the system])
             else
                 AC_MSG_RESULT(too old)
