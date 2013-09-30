@@ -63,6 +63,7 @@ if test "$PHP_OPENCV" != "no"; then
                 PHP_EVAL_INCLINE($OPENCV_INCS)
                 PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
                 AC_DEFINE(HAVE_OPENCV, 1, [whether opencv exists in the system])
+                PHP_SUBST(OPENCV_SHARED_LIBADD)
             else
                 AC_MSG_RESULT(too old)
                 AC_MSG_ERROR(Ooops ! You need at least opencv 2.1.0)
