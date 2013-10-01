@@ -830,7 +830,7 @@ PHP_METHOD(OpenCV_Image, fillColor)
 
     image_object = opencv_image_object_get(image_zval TSRMLS_CC);
 
-    cvSet(image_object->cvptr, CV_RGB(redVal, greenVal, blueVal));
+    cvSet(image_object->cvptr, CV_RGB(redVal, greenVal, blueVal), NULL);
     php_opencv_throw_exception(TSRMLS_C);
 }
 
@@ -849,7 +849,7 @@ PHP_METHOD(OpenCV_Image, avg)
 
     image_object = opencv_image_object_get(image_zval TSRMLS_CC);
 
-    CvScalar s = cvAvg(image_object->cvptr);
+    CvScalar s = cvAvg(image_object->cvptr, NULL);
 
     array_init(return_value);
     add_next_index_double(return_value, s.val[0]);
