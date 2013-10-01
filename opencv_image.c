@@ -815,6 +815,50 @@ PHP_METHOD(OpenCV_Image, copy)
     php_opencv_throw_exception(TSRMLS_C);
 }
 
+
+PHP_METHOD(OpenCV_Image, fillColor)
+{
+    opencv_image_object *image_object;
+    zval *image_zval;
+    long redVal, greenVal, blueVal;
+    PHP_OPENCV_ERROR_HANDLING();
+    if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "Olll", &image_zval, opencv_ce_image, &redVal, &greenVal, &blueVal) == FAILURE) {
+        PHP_OPENCV_RESTORE_ERRORS();
+        return;
+    }
+    PHP_OPENCV_RESTORE_ERRORS();
+
+    image_object = opencv_image_object_get(image_zval TSRMLS_CC);
+
+    cvSet(image_object->cvptr, CV_RGB(redVal, greenVal, blueVal));
+    php_opencv_throw_exception(TSRMLS_C);
+}
+
+
+PHP_METHOD(OpenCV_Image, avg)
+{
+    opencv_image_object *image_object;
+    zval *image_zval;
+    long redVal, greenVal, blueVal;
+    PHP_OPENCV_ERROR_HANDLING();
+    if (zend_parse_method_parameters(ZEND_NUM_ARGS() TSRMLS_CC, getThis(), "O", &image_zval, opencv_ce_image) == FAILURE) {
+        PHP_OPENCV_RESTORE_ERRORS();
+        return;
+    }
+    PHP_OPENCV_RESTORE_ERRORS();
+
+    image_object = opencv_image_object_get(image_zval TSRMLS_CC);
+
+    cvScalar s = cvAvg(image_object->cvptr);
+    
+    array_init(return_value);
+    add_next_index_double(return_value, avg.val[0]);
+    add_next_index_double(return_value, avg.val[1]);
+    add_next_index_double(return_value, avg.val[2]);
+
+    php_opencv_throw_exception(TSRMLS_C);
+}
+
 /* {{{ opencv_image_methods[] */
 const zend_function_entry opencv_image_methods[] = {
     PHP_ME(OpenCV_Image, __construct, NULL, ZEND_ACC_PUBLIC|ZEND_ACC_CTOR)
@@ -844,6 +888,8 @@ const zend_function_entry opencv_image_methods[] = {
     PHP_ME(OpenCV_Image, haarDetectObjects, NULL, ZEND_ACC_PUBLIC)
 	PHP_ME(OpenCV_Image, rectangle, NULL, ZEND_ACC_PUBLIC)
     PHP_ME(OpenCV_Image, copy, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(OpenCV_Image, avg, NULL, ZEND_ACC_PUBLIC)
+    PHP_ME(OpenCV_Image, fillColor, NULL, ZEND_ACC_PUBLIC)
     {NULL, NULL, NULL}
 };
 /* }}} */
