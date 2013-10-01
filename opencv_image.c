@@ -849,12 +849,12 @@ PHP_METHOD(OpenCV_Image, avg)
 
     image_object = opencv_image_object_get(image_zval TSRMLS_CC);
 
-    cvScalar s = cvAvg(image_object->cvptr);
-    
+    CvScalar s = cvAvg(image_object->cvptr);
+
     array_init(return_value);
-    add_next_index_double(return_value, avg.val[0]);
-    add_next_index_double(return_value, avg.val[1]);
-    add_next_index_double(return_value, avg.val[2]);
+    add_next_index_double(return_value, s.val[0]);
+    add_next_index_double(return_value, s.val[1]);
+    add_next_index_double(return_value, s.val[2]);
 
     php_opencv_throw_exception(TSRMLS_C);
 }
