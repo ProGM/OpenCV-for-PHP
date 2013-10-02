@@ -61,8 +61,24 @@ if test "$PHP_OPENCV" != "no"; then
                 OPENCV_LIBS="$LDFLAGS `$PKG_CONFIG --libs opencv`"
                 OPENCV_INCS="$CFLAGS `$PKG_CONFIG --cflags-only-I opencv`"
                 PHP_EVAL_INCLINE($OPENCV_INCS)
-                OPENCV_SHARED_LIBADD=$OPENCV_LIBS
-                PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_core, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_calib3d, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_contrib, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_features2d, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_flann, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_gpu, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_highgui, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_imgproc, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_legacy, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_ml, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_nonfree, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_objdetect, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_photo, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_stitching, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_superres, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_ts, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_video, "", OPENCV_SHARED_LIBADD)
+                PHP_ADD_LIBRARY_WITH_PATH(opencv_videostab, "", OPENCV_SHARED_LIBADD)
                 AC_DEFINE(HAVE_OPENCV, 1, [whether opencv exists in the system])
             else
                 AC_MSG_RESULT(too old)
