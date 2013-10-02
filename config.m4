@@ -58,21 +58,23 @@ if test "$PHP_OPENCV" != "no"; then
             if $PKG_CONFIG --atleast-version=2.1.0 opencv; then
                 opencv_version_full=`$PKG_CONFIG --modversion opencv`
                 AC_MSG_RESULT([found $opencv_version_full])
-                OPENCV_ONLY_LIBS="`$PKG_CONFIG --libs opencv`"
+                OPENCV_ONLY_LIBS="`$PKG_CONFIG --libs x11`"
                 OPENCV_LIBS="$LDFLAGS $OPENCV_ONLY_LIBS"
                 OPENCV_INCS="$CFLAGS `$PKG_CONFIG --cflags-only-I opencv`"
                 PHP_EVAL_INCLINE($OPENCV_INCS)
 
-                if [[ $OPENCV_ONLY_LIBS =~ [:space:]-l[a-zA-Z_]+[:space:] ]]; then
-                  OPENCV_SHARED_LIBADD=$OPENCV_LIBS
-                  PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
-                else
+                if expr match "$OPENCV_ONLY_LIBS" '.*.so '; then
                   for TMP_LIB in $OPENCV_ONLY_LIBS
                   do
                     TMP_PATH=$(dirname $TMP_LIB)
-                    TMP_LIB_NAME=$(basename $TMP_LIB)
-                    PHP_ADD_LIBRARY_WITH_PATH(TMP_LIB_NAME, TMP_PATH, OPENCV_SHARED_LIBADD)
+                    TMP_L=$(basename $TMP_LIB)
+                    TMP_LIB_NAME="$TMP_LIB_NAME -l${TMP_L:3}"
+                    TMP_LIB_NAME=${TMP_LIB_NAME:0:-3}
                   done
+                  TMP_RESULT="$LDFLAGS -L$TMP_PATH $TMP_LIB_NAME"
+                  PHP_EVAL_LIBLINE($TMP_RESULT, OPENCV_SHARED_LIBADD)
+                else
+                  PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
                 fi
                 AC_DEFINE(HAVE_OPENCV, 1, [whether opencv exists in the system])
             else
