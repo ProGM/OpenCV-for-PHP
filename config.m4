@@ -58,11 +58,22 @@ if test "$PHP_OPENCV" != "no"; then
             if $PKG_CONFIG --atleast-version=2.1.0 opencv; then
                 opencv_version_full=`$PKG_CONFIG --modversion opencv`
                 AC_MSG_RESULT([found $opencv_version_full])
-                OPENCV_LIBS="$LDFLAGS `$PKG_CONFIG --libs opencv`"
+                OPENCV_ONLY_LIBS="`$PKG_CONFIG --libs opencv`"
+                OPENCV_LIBS="$LDFLAGS $OPENCV_ONLY_LIBS"
                 OPENCV_INCS="$CFLAGS `$PKG_CONFIG --cflags-only-I opencv`"
                 PHP_EVAL_INCLINE($OPENCV_INCS)
-                OPENCV_SHARED_LIBADD=$OPENCV_LIBS
-                PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
+
+                if [[ $OPENCV_ONLY_LIBS =~ [:space:]-l[a-zA-Z_]+[:space:] ]]; then
+                  OPENCV_SHARED_LIBADD=$OPENCV_LIBS
+                  PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
+                else
+                  for TMP_LIB in $OPENCV_ONLY_LIBS
+                  do
+                    TMP_PATH=$(dirname $TMP_LIB)
+                    TMP_LIB_NAME=$(basename $TMP_LIB)
+                    PHP_ADD_LIBRARY_WITH_PATH(TMP_LIB_NAME, TMP_PATH, OPENCV_SHARED_LIBADD)
+                  done
+                fi
                 AC_DEFINE(HAVE_OPENCV, 1, [whether opencv exists in the system])
             else
                 AC_MSG_RESULT(too old)
