@@ -72,6 +72,7 @@ if test "$PHP_OPENCV" != "no"; then
                     TMP_LIB_NAME=${TMP_LIB_NAME:0:-3}
                   done
                   TMP_RESULT="$LDFLAGS -L$TMP_PATH $TMP_LIB_NAME"
+                  OPENCV_SHARED_LIBADD=$TMP_RESULT
                   PHP_EVAL_LIBLINE($TMP_RESULT, OPENCV_SHARED_LIBADD)
                 else
                   PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
