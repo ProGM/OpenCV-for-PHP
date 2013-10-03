@@ -66,6 +66,7 @@ if test "$PHP_OPENCV" != "no"; then
                 if expr match "$OPENCV_ONLY_LIBS" '.*.so '; then
                   for TMP_LIB in $OPENCV_ONLY_LIBS
                   do
+                    AC_MSG_RESULT($TMP_LIB)
                     TMP_PATH=$(dirname $TMP_LIB)
                     TMP_L=$(basename $TMP_LIB)
                     TMP_LIB_NAME="$TMP_LIB_NAME -l${TMP_L:3}"
@@ -73,10 +74,8 @@ if test "$PHP_OPENCV" != "no"; then
                   done
                   TMP_RESULT="$LDFLAGS -L$TMP_PATH $TMP_LIB_NAME"
                   PHP_EVAL_LIBLINE($TMP_RESULT, OPENCV_SHARED_LIBADD)
-                  AC_MSG_RESULT(TEST1234)
                 else
                   PHP_EVAL_LIBLINE($OPENCV_LIBS, OPENCV_SHARED_LIBADD)
-                  AC_MSG_RESULT(TEST123)
                 fi
                 AC_DEFINE(HAVE_OPENCV, 1, [whether opencv exists in the system])
             else
