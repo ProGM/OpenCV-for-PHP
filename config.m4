@@ -58,7 +58,7 @@ if test "$PHP_OPENCV" != "no"; then
             if $PKG_CONFIG --atleast-version=2.1.0 opencv; then
                 opencv_version_full=`$PKG_CONFIG --modversion opencv`
                 AC_MSG_RESULT([found $opencv_version_full])
-                OPENCV_ONLY_LIBS="`$PKG_CONFIG --libs x11`"
+                OPENCV_ONLY_LIBS="`$PKG_CONFIG --libs opencv`"
                 OPENCV_LIBS="$LDFLAGS $OPENCV_ONLY_LIBS"
                 OPENCV_INCS="$CFLAGS `$PKG_CONFIG --cflags-only-I opencv`"
                 PHP_EVAL_INCLINE($OPENCV_INCS)
