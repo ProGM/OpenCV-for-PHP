@@ -69,7 +69,7 @@ if test "$PHP_OPENCV" != "no"; then
                     TMP_PATH=$(dirname $TMP_LIB)
                     TMP_L=$(basename "$TMP_LIB")
                     AC_MSG_RESULT($TMP_L)
-                    TMP_L="$(TMP_L%%.*)"
+                    TMP_L="${TMP_L%%.*}"
                     TMP_LIB_NAME="$TMP_LIB_NAME -l${TMP_L:3}"
                   done
                   TMP_RESULT="$LDFLAGS -L$TMP_PATH $TMP_LIB_NAME"
