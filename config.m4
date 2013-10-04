@@ -66,9 +66,9 @@ if test "$PHP_OPENCV" != "no"; then
                 if expr match "$OPENCV_ONLY_LIBS" '.*.so '; then
                   for TMP_LIB in $OPENCV_ONLY_LIBS
                   do
-                    AC_MSG_RESULT($TMP_LIB)
                     TMP_PATH=$(dirname $TMP_LIB)
                     TMP_L=$(basename $TMP_LIB)
+                    AC_MSG_RESULT($TMP_L)
                     TMP_LIB_NAME="$TMP_LIB_NAME -l${TMP_L:3}"
                     TMP_LIB_NAME=${TMP_LIB_NAME:0:-3}
                   done
