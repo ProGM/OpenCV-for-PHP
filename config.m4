@@ -67,8 +67,8 @@ if test "$PHP_OPENCV" != "no"; then
                   for TMP_LIB in $OPENCV_ONLY_LIBS
                   do
                     TMP_PATH=$(dirname $TMP_LIB)
-                    TMP_L=$(basename $TMP_LIB)
-                    TMP_L=$(TMP_L%.*)
+                    TMP_L="$(basename $TMP_LIB)""
+                    TMP_L="$(TMP_L%.*)"
                     TMP_LIB_NAME="$TMP_LIB_NAME -l${TMP_L:3}"
                     AC_MSG_RESULT($TMP_LIB_NAME)
                   done
